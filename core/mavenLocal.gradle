@@ -1,6 +1,6 @@
 apply plugin: 'maven'
 
-group = 'com.idonans.lang'
+group = 'com.idonans.core'
 version = rootProject.ext.bcfg.ver.versionName
 
 uploadArchives {

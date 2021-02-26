@@ -29,6 +29,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':lang')
+    implementation project(path: ':core')
     implementation rootProject.ext.bcfg.deps.androidx_constraintlayout
 }

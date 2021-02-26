@@ -1,4 +1,4 @@
-package com.idonans.example.lang;
+package com.idonans.example.core;
 
 import android.os.Bundle;
 import android.text.InputFilter;
