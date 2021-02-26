@@ -1,0 +1,27 @@
+buildscript {
+    apply from: 'https://raw.githubusercontent.com/idonans/Example/master/versions.gradle'
+    rootProject.ext.bcfg.addRepos(repositories)
+    dependencies {
+        classpath rootProject.ext.bcfg.deps.android_gradle_plugin
+        classpath rootProject.ext.bcfg.deps.android_maven_gradle_plugin
+        classpath rootProject.ext.bcfg.deps.gradle_bintray_plugin
+        classpath rootProject.ext.bcfg.deps.kotlin_gradle_plugin
+    }
+    repositories {
+        google()
+    }
+}
+
+allprojects {
+    rootProject.ext.bcfg.addRepos(repositories)
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// bintray upload command
+// ./gradlew :lang:clean :lang:install :lang:bintrayUpload
+
+// maven local command
+// ./gradlew :lang:clean :lang:uploadArchives
