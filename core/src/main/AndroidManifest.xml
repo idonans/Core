@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.idonans.lang">
+    package="com.idonans.core">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
         <provider
-            android:name=".CommonFileProvider"
+            android:name="com.idonans.core.CommonFileProvider"
             android:authorities="______${applicationId}.CommonFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

@@ -6,11 +6,10 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.idonans.lang.CharLengthInputFilter;
-import com.idonans.lang.RegexInputFilter;
-import com.idonans.lang.manager.AppIDManager;
-import com.idonans.lang.manager.TmpFileManager;
-import com.idonans.lang.thread.Threads;
+import com.idonans.core.RegexInputFilter;
+import com.idonans.core.manager.AppIDManager;
+import com.idonans.core.manager.TmpFileManager;
+import com.idonans.core.thread.Threads;
 
 import java.io.File;
 
