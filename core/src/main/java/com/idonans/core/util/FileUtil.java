@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import androidx.annotation.Nullable;
 
 import com.idonans.core.CommonFileProvider;
-import com.idonans.core.CoreLog;
+import com.idonans.core.LibLog;
 import com.idonans.core.manager.ProcessManager;
 
 import java.io.File;
@@ -31,18 +31,18 @@ public class FileUtil {
     @Nullable
     public static File getAppMediaDir() {
         if (!PermissionUtil.hasExternalStoragePermission()) {
-            CoreLog.e("permission required");
+            LibLog.e("permission required");
             return null;
         }
 
         File rootDir = Environment.getExternalStorageDirectory();
         if (rootDir == null) {
-            CoreLog.e("Environment.getExternalStorageDirectory() return null");
+            LibLog.e("Environment.getExternalStorageDirectory() return null");
             return null;
         }
         String mediaDirName = getMediaDirName();
         if (TextUtils.isEmpty(mediaDirName)) {
-            CoreLog.e("mediaDirName is empty");
+            LibLog.e("mediaDirName is empty");
             return null;
         }
 
@@ -53,7 +53,7 @@ public class FileUtil {
 
         final boolean exists = targetDir.exists();
         final boolean notDirectory = !targetDir.isDirectory();
-        CoreLog.e("fail to init dir(getAppMediaDir) exists:%s, notDirectory:%s, path:%s", exists, notDirectory, targetDir.getPath());
+        LibLog.e("fail to init dir(getAppMediaDir) exists:%s, notDirectory:%s, path:%s", exists, notDirectory, targetDir.getPath());
         return null;
     }
 

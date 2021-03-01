@@ -6,12 +6,12 @@
     <application>
         <provider
             android:name="com.idonans.core.CommonFileProvider"
-            android:authorities="______${applicationId}.CommonFileProvider"
+            android:authorities="___idonans_core___${applicationId}.CommonFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/______file_provider" />
+                android:resource="@xml/___idonans_core___file_provider" />
         </provider>
     </application>
 </manifest>

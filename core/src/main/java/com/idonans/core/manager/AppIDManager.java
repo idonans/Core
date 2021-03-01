@@ -1,7 +1,7 @@
 package com.idonans.core.manager;
 
 import com.idonans.core.Constants;
-import com.idonans.core.CoreLog;
+import com.idonans.core.LibLog;
 import com.idonans.core.Singleton;
 
 import java.util.UUID;
@@ -27,13 +27,13 @@ public class AppIDManager {
     private String mAppID;
 
     private AppIDManager() {
-        CoreLog.v("init");
+        LibLog.v("init");
         mAppID = StorageManager.getInstance().getOrSetLock(
                 StorageManager.NAMESPACE_SETTING,
                 KEY_APP_ID,
                 UUID.randomUUID().toString());
 
-        CoreLog.v("AppID=%s", mAppID);
+        LibLog.v("AppID=%s", mAppID);
     }
 
     public String getAppID() {

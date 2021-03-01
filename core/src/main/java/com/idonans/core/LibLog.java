@@ -6,15 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * Core 内的统一日志输出
+ * Lib 内的统一日志输出
+ *
+ * @author idonans
+ * @version 1.0
  */
-public final class CoreLog {
+public final class LibLog {
 
     /**
      * 日志打印级别, 默认 {@linkplain Log#ERROR}
      */
     private static int LOG_LEVEL = Log.ERROR;
-    private static final String LOG_TAG = "CORE_" + BuildConfig.CORE_VERSION_NAME + "(" + BuildConfig.CORE_VERSION_CODE + ")";
+    private static final String LOG_TAG = BuildConfig.LIB_NAME + "_" + BuildConfig.LIB_VERSION_NAME + "(" + BuildConfig.LIB_VERSION_CODE + ")";
 
     /**
      * 设置日志级别，可取值为 {@linkplain Log#ERROR}, {@linkplain Log#WARN}, {@linkplain Log#INFO},
@@ -39,6 +42,10 @@ public final class CoreLog {
         v(null, msg, args);
     }
 
+    public static void v(@NonNull Throwable e) {
+        v(e, null);
+    }
+
     public static void v(@Nullable Throwable e, @Nullable String msg, Object... args) {
         if (!isLoggable(Log.VERBOSE)) {
             return;
@@ -53,6 +60,10 @@ public final class CoreLog {
 
     public static void d(@Nullable String msg, Object... args) {
         d(null, msg, args);
+    }
+
+    public static void d(@NonNull Throwable e) {
+        d(e, null);
     }
 
     public static void d(@Nullable Throwable e, @Nullable String msg, Object... args) {
@@ -71,6 +82,10 @@ public final class CoreLog {
         i(null, msg, args);
     }
 
+    public static void i(@NonNull Throwable e) {
+        i(e, null);
+    }
+
     public static void i(@Nullable Throwable e, @Nullable String msg, Object... args) {
         if (!isLoggable(Log.INFO)) {
             return;
@@ -87,6 +102,10 @@ public final class CoreLog {
         w(null, msg, args);
     }
 
+    public static void w(@NonNull Throwable e) {
+        w(e, null);
+    }
+
     public static void w(@Nullable Throwable e, @Nullable String msg, Object... args) {
         if (!isLoggable(Log.WARN)) {
             return;
@@ -101,6 +120,10 @@ public final class CoreLog {
 
     public static void e(@Nullable String msg, Object... args) {
         e(null, msg, args);
+    }
+
+    public static void e(@NonNull Throwable e) {
+        e(e, null);
     }
 
     public static void e(@Nullable Throwable e, @Nullable String msg, Object... args) {

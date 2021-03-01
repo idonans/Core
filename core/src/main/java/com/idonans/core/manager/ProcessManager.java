@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Binder;
 import android.text.TextUtils;
 
-import com.idonans.core.CoreLog;
+import com.idonans.core.LibLog;
 import com.idonans.core.Singleton;
 import com.idonans.core.util.ContextUtil;
 
@@ -42,7 +42,7 @@ public class ProcessManager {
     private boolean mMainProcess;
 
     private ProcessManager() {
-        CoreLog.v("init");
+        LibLog.v("init");
         mProcessId = android.os.Process.myPid();
         mProcessName = fetchProcessName();
 
@@ -67,7 +67,7 @@ public class ProcessManager {
             mProcessTag = "sub_" + processSuffix;
         }
 
-        CoreLog.v("process tag:%s, id:%s, name:%s", mProcessTag, mProcessId, mProcessName);
+        LibLog.v("process tag:%s, id:%s, name:%s", mProcessTag, mProcessId, mProcessName);
     }
 
     private String fetchProcessName() {
@@ -91,7 +91,7 @@ public class ProcessManager {
                 Binder.getCallingPid(),
                 Binder.getCallingUid(),
                 processInfos.size());
-        CoreLog.e("fallback process name %s", fallback);
+        LibLog.e("fallback process name %s", fallback);
         return fallback;
     }
 

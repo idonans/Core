@@ -9,8 +9,9 @@ android {
         targetSdkVersion rootProject.ext.bcfg.ver.target_sdk
         versionCode rootProject.ext.bcfg.ver.versionCode
         versionName rootProject.ext.bcfg.ver.versionName
-        buildConfigField("int", "CORE_VERSION_CODE", "$versionCode")
-        buildConfigField("String", "CORE_VERSION_NAME", "\"$versionName\"")
+        buildConfigField("String", "LIB_NAME", "\"Core\"")
+        buildConfigField("int", "LIB_VERSION_CODE", "$versionCode")
+        buildConfigField("String", "LIB_VERSION_NAME", "\"$versionName\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

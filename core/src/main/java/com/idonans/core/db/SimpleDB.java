@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.idonans.core.Constants;
-import com.idonans.core.CoreLog;
+import com.idonans.core.LibLog;
 import com.idonans.core.manager.ProcessManager;
 import com.idonans.core.security.AES;
 import com.idonans.core.util.ContextUtil;
@@ -45,7 +45,7 @@ public class SimpleDB {
      * 实现中会在数据库名前附加当前进程标识
      */
     public SimpleDB(@NonNull String databaseName) {
-        CoreLog.v("init");
+        LibLog.v("init");
         String dbName = Constants.GLOBAL_PREFIX + ProcessManager.getInstance().getProcessTag() + "_" + databaseName;
         mOpenHelper =
                 new SQLiteOpenHelper(ContextUtil.getContext(), dbName, null, DB_VERSION) {
@@ -272,7 +272,7 @@ public class SimpleDB {
             String dbName = this.mOpenHelper.getDatabaseName();
             String dbPath = db.getPath();
             String tag = dbPath + "[" + dbName + "]";
-            CoreLog.d("--" + tag + "--");
+            LibLog.d("--" + tag + "--");
             cursor =
                     db.query(
                             TABLE_NAME,
@@ -293,9 +293,9 @@ public class SimpleDB {
                 key = decodeKey(key);
                 value = decodeValue(value);
 
-                CoreLog.d(dbName + " " + update + ", " + key + ", " + value);
+                LibLog.d(dbName + " " + update + ", " + key + ", " + value);
             }
-            CoreLog.d("--" + tag + "-- end");
+            LibLog.d("--" + tag + "-- end");
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {

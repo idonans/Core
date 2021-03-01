@@ -12,7 +12,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 
-import com.idonans.core.CoreLog;
+import com.idonans.core.LibLog;
 
 import java.io.File;
 
@@ -120,7 +120,7 @@ public class SystemUtil {
             ContextUtil.getContext().sendBroadcast(intent);
             return true;
         } catch (Throwable e) {
-            CoreLog.e(e, "fail add to media store " + file);
+            LibLog.e(e, "fail add to media store " + file);
         }
         return false;
     }
