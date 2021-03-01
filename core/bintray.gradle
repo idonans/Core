@@ -10,7 +10,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'android application tiny core libray'
+                name 'android application tiny core library'
                 url siteUrl
                 licenses {
                     license {
