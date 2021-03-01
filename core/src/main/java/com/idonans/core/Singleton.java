@@ -1,19 +1,22 @@
 package com.idonans.core;
 
 /**
- * copy from android.util.Singleton 支持延迟初始化
+ * 单例辅助类
  */
 public abstract class Singleton<T> {
+
     private T mInstance;
+    private final Object mInstanceLock = new Object();
 
     protected abstract T create();
 
     public final T get() {
-        synchronized (this) {
+        synchronized (mInstanceLock) {
             if (mInstance == null) {
                 mInstance = create();
             }
             return mInstance;
         }
     }
+
 }

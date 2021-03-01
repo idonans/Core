@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public class AppIDManager {
 
-    private static final Singleton<AppIDManager> sInstance =
+    private static final Singleton<AppIDManager> INSTANCE =
             new Singleton<AppIDManager>() {
                 @Override
                 protected AppIDManager create() {
@@ -20,11 +20,12 @@ public class AppIDManager {
             };
 
     public static AppIDManager getInstance() {
-        return sInstance.get();
+        return INSTANCE.get();
     }
 
     private static final String KEY_APP_ID = Constants.GLOBAL_PREFIX + "app_id";
-    private String mAppID;
+
+    private final String mAppID;
 
     private AppIDManager() {
         LibLog.v("init");

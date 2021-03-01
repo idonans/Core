@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class ProcessManager {
 
-    private static final Singleton<ProcessManager> sInstance =
+    private static final Singleton<ProcessManager> INSTANCE =
             new Singleton<ProcessManager>() {
                 @Override
                 protected ProcessManager create() {
@@ -24,22 +24,14 @@ public class ProcessManager {
                 }
             };
 
-    private static boolean sInit;
-
     public static ProcessManager getInstance() {
-        ProcessManager instance = sInstance.get();
-        sInit = true;
-        return instance;
+        return INSTANCE.get();
     }
 
-    public static boolean isInit() {
-        return sInit;
-    }
-
-    private int mProcessId;
-    private String mProcessName;
-    private String mProcessTag;
-    private boolean mMainProcess;
+    private final int mProcessId;
+    private final String mProcessName;
+    private final String mProcessTag;
+    private final boolean mMainProcess;
 
     private ProcessManager() {
         LibLog.v("init");

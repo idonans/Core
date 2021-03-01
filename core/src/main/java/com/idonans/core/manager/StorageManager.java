@@ -20,7 +20,7 @@ public class StorageManager {
     public static final String NAMESPACE_SETTING = Constants.GLOBAL_PREFIX + "setting";
     public static final String NAMESPACE_CACHE = Constants.GLOBAL_PREFIX + "cache";
 
-    private static final Singleton<StorageManager> sInstance =
+    private static final Singleton<StorageManager> INSTANCE =
             new Singleton<StorageManager>() {
                 @Override
                 protected StorageManager create() {
@@ -29,7 +29,7 @@ public class StorageManager {
             };
 
     public static StorageManager getInstance() {
-        return sInstance.get();
+        return INSTANCE.get();
     }
 
     private final Map<String, SimpleDB> mProviders = new HashMap<>();

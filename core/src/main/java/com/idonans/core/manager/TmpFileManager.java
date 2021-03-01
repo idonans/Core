@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TmpFileManager {
 
-    private static final Singleton<TmpFileManager> sInstance =
+    private static final Singleton<TmpFileManager> INSTANCE =
             new Singleton<TmpFileManager>() {
                 @Override
                 protected TmpFileManager create() {
@@ -25,16 +25,8 @@ public class TmpFileManager {
                 }
             };
 
-    private static boolean sInit;
-
     public static TmpFileManager getInstance() {
-        TmpFileManager instance = sInstance.get();
-        sInit = true;
-        return instance;
-    }
-
-    public static boolean isInit() {
-        return sInit;
+        return INSTANCE.get();
     }
 
     private static final long MAX_AGE = 10 * TimeUnit.DAYS.toMillis(1);
