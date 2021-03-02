@@ -5,8 +5,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.idonans.appcontext.BuildConfig;
-
 /**
  * Lib 内的统一日志输出
  *
