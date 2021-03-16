@@ -11,6 +11,10 @@ public abstract class Singleton<T> {
     protected abstract T create();
 
     public final T get() {
+        if (mInstance != null) {
+            return mInstance;
+        }
+
         synchronized (mInstanceLock) {
             if (mInstance == null) {
                 mInstance = create();
