@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import io.github.idonans.core.Constants;
-import io.github.idonans.core.LibLog;
+import io.github.idonans.core.CoreLog;
 import io.github.idonans.core.Singleton;
 import io.github.idonans.core.db.SimpleDB;
 
@@ -37,7 +37,7 @@ public class StorageManager {
     private final Object mGetOrSetLock = new Object();
 
     private StorageManager() {
-        LibLog.v("init");
+        CoreLog.v("init");
     }
 
     public void set(String namespace, String key, String value) {

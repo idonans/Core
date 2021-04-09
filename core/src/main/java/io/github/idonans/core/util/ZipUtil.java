@@ -1,6 +1,6 @@
 package io.github.idonans.core.util;
 
-import io.github.idonans.core.LibLog;
+import io.github.idonans.core.CoreLog;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,7 +29,7 @@ public final class ZipUtil {
             dos.close();
             return baos.toByteArray();
         } catch (Throwable e) {
-            LibLog.e(e, "ZipUtil deflate fail");
+            CoreLog.e(e, "ZipUtil deflate fail");
             throw new RuntimeException(e);
         } finally {
             IOUtil.closeQuietly(dos);
@@ -50,7 +50,7 @@ public final class ZipUtil {
             ios.close();
             return baos.toByteArray();
         } catch (Throwable e) {
-            LibLog.e(e, "ZipUtil inflate fail");
+            CoreLog.e(e, "ZipUtil inflate fail");
             throw new RuntimeException(e);
         } finally {
             IOUtil.closeQuietly(ios);
@@ -76,7 +76,7 @@ public final class ZipUtil {
             }
             return entryMap;
         } catch (Throwable e) {
-            LibLog.e(e, "ZipUtil unzip fail");
+            CoreLog.e(e, "ZipUtil unzip fail");
             throw new RuntimeException(e);
         } finally {
             IOUtil.closeQuietly(zis);

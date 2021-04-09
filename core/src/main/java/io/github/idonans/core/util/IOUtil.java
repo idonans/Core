@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 import io.github.idonans.core.AbortSignal;
 import io.github.idonans.core.Charsets;
-import io.github.idonans.core.LibLog;
+import io.github.idonans.core.CoreLog;
 import io.github.idonans.core.Progress;
 
 import java.io.BufferedReader;
@@ -42,7 +42,7 @@ public final class IOUtil {
                 webView.clearHistory();
                 webView.loadUrl("about:blank");
             } catch (Throwable e) {
-                LibLog.e(e, "closeQuietly");
+                CoreLog.e(e, "closeQuietly");
             }
         }
     }
@@ -60,7 +60,7 @@ public final class IOUtil {
             try {
                 closeable.close();
             } catch (Throwable e) {
-                LibLog.e(e, "closeQuietly");
+                CoreLog.e(e, "closeQuietly");
             }
         }
     }
@@ -70,7 +70,7 @@ public final class IOUtil {
             try {
                 cursor.close();
             } catch (Throwable e) {
-                LibLog.e(e, "closeQuietly");
+                CoreLog.e(e, "closeQuietly");
             }
         }
     }
@@ -80,7 +80,7 @@ public final class IOUtil {
             try {
                 socket.close();
             } catch (Throwable e) {
-                LibLog.e(e, "closeQuietly");
+                CoreLog.e(e, "closeQuietly");
             }
         }
     }

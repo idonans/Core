@@ -3,7 +3,7 @@ package io.github.idonans.core.manager;
 import androidx.annotation.Nullable;
 
 import io.github.idonans.core.Constants;
-import io.github.idonans.core.LibLog;
+import io.github.idonans.core.CoreLog;
 import io.github.idonans.core.Singleton;
 import io.github.idonans.core.thread.TaskQueue;
 import io.github.idonans.core.thread.Threads;
@@ -37,7 +37,7 @@ public class TmpFileManager {
     private static final int MAX_CLEAR_RETRY_COUNT = 5;
 
     private TmpFileManager() {
-        LibLog.v("init");
+        CoreLog.v("init");
         clear();
     }
 
@@ -64,7 +64,7 @@ public class TmpFileManager {
 
     private void clear(final int retry) {
         if (retry > MAX_CLEAR_RETRY_COUNT) {
-            LibLog.e("retry %s times, abort.", retry);
+            CoreLog.e("retry %s times, abort.", retry);
             return;
         }
 
@@ -76,7 +76,7 @@ public class TmpFileManager {
                     @Override
                     public void run() {
                         if (mClearQueue.getWaitCount() > 0) {
-                            LibLog.d("has other task for clear, ignore this.");
+                            CoreLog.d("has other task for clear, ignore this.");
                             return;
                         }
 
@@ -85,9 +85,9 @@ public class TmpFileManager {
                             public void run() {
                                 try {
                                     clearInternal();
-                                    LibLog.d("clear success");
+                                    CoreLog.d("clear success");
                                 } catch (Throwable e) {
-                                    LibLog.e(e, "exception happen dur clear, retry later");
+                                    CoreLog.e(e, "exception happen dur clear, retry later");
                                     clear(retry + 1);
                                 }
                             }
@@ -102,11 +102,11 @@ public class TmpFileManager {
      * 清除过期临时文件
      */
     private void clearInternal() throws Throwable {
-        LibLog.v("start clearInternal");
+        CoreLog.v("start clearInternal");
 
         File tmpFileDir = getTmpFileDir();
         if (tmpFileDir == null || !tmpFileDir.exists()) {
-            LibLog.v("clear tmp file dir not found %s", tmpFileDir);
+            CoreLog.v("clear tmp file dir not found %s", tmpFileDir);
             return;
         }
 
@@ -122,14 +122,14 @@ public class TmpFileManager {
             }
 
             if (!file.isFile()) {
-                LibLog.w("tmp file is not a file %s", file.getCanonicalPath());
+                CoreLog.w("tmp file is not a file %s", file.getCanonicalPath());
             }
 
             if (file.lastModified() + MAX_AGE < System.currentTimeMillis()) {
-                LibLog.v("remove expire tmp file %s", file);
+                CoreLog.v("remove expire tmp file %s", file);
                 if (!FileUtil.deleteFileQuietly(file)) {
                     failToRemoveSize++;
-                    LibLog.e("fail to remove expire tmp file %s", file);
+                    CoreLog.e("fail to remove expire tmp file %s", file);
                 }
             }
         }
