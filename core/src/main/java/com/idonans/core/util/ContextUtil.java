@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.idonans.appcontext.AppContext;
+import io.github.idonans.appcontext.AppContext;
 
 public class ContextUtil {
 
