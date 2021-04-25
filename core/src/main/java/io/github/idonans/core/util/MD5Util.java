@@ -5,21 +5,17 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import io.github.idonans.core.Charsets;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 
+import io.github.idonans.core.Charsets;
+
 /**
  * MD5 辅助类(小写32位)
  */
 public class MD5Util {
-
-    private static final char[] HEX_DIGITS = {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
-    };
 
     private static final String DEFAULT_MD5 = "";
 
@@ -57,7 +53,7 @@ public class MD5Util {
             } while (read != -1);
 
             byte[] data = messageDigest.digest();
-            return toHexString(data);
+            return HexUtil.toHexString(data);
         } catch (Throwable e) {
             e.printStackTrace();
             return DEFAULT_MD5;
@@ -76,20 +72,12 @@ public class MD5Util {
 
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             byte[] data = messageDigest.digest(str.getBytes(Charsets.UTF8));
-            return toHexString(data);
+            return HexUtil.toHexString(data);
         } catch (Throwable e) {
             e.printStackTrace();
             return DEFAULT_MD5;
         }
     }
 
-    private static String toHexString(byte[] data) {
-        char[] result = new char[data.length * 2];
-        int i = 0;
-        for (byte b : data) {
-            result[i++] = HEX_DIGITS[(b >> 4) & 0xf];
-            result[i++] = HEX_DIGITS[b & 0xf];
-        }
-        return String.valueOf(result);
-    }
+
 }
