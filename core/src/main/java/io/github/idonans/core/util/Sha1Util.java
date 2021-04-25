@@ -12,31 +12,34 @@ import java.security.MessageDigest;
 
 import io.github.idonans.core.Charsets;
 
-public class MD5Util {
+public class Sha1Util {
 
-    private static final String DEFAULT_MD5 = "";
+    private Sha1Util() {
+    }
+
+    private static final String DEFAULT_SHA1 = "";
 
     @NonNull
-    public static String md5FilePath(@Nullable String filePath) {
+    public static String sha1FilePath(@Nullable String filePath) {
         try {
             if (TextUtils.isEmpty(filePath)) {
-                return DEFAULT_MD5;
+                return DEFAULT_SHA1;
             }
 
-            return md5(new File(filePath));
+            return sha1(new File(filePath));
         } catch (Throwable e) {
             e.printStackTrace();
-            return DEFAULT_MD5;
+            return DEFAULT_SHA1;
         }
     }
 
     @NonNull
-    public static String md5(@Nullable File file) {
+    public static String sha1(@Nullable File file) {
         FileInputStream fis = null;
         DigestInputStream dis = null;
         try {
             if (file == null || !file.exists()) {
-                return DEFAULT_MD5;
+                return DEFAULT_SHA1;
             }
 
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
@@ -53,7 +56,7 @@ public class MD5Util {
             return HexUtil.toHexString(data);
         } catch (Throwable e) {
             e.printStackTrace();
-            return DEFAULT_MD5;
+            return DEFAULT_SHA1;
         } finally {
             IOUtil.closeQuietly(dis);
             IOUtil.closeQuietly(fis);
@@ -61,18 +64,18 @@ public class MD5Util {
     }
 
     @NonNull
-    public static String md5(@Nullable String str) {
+    public static String sha1(@Nullable String str) {
         try {
             if (str == null) {
-                return DEFAULT_MD5;
+                return DEFAULT_SHA1;
             }
 
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             byte[] data = messageDigest.digest(str.getBytes(Charsets.UTF8));
             return HexUtil.toHexString(data);
         } catch (Throwable e) {
             e.printStackTrace();
-            return DEFAULT_MD5;
+            return DEFAULT_SHA1;
         }
     }
 
