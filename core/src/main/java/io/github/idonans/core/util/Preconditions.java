@@ -19,15 +19,12 @@ package io.github.idonans.core.util;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RestrictTo;
 
 import java.util.Locale;
 
 /**
- * Simple static methods to be called at the start of your own methods to verify
- * correct arguments and state.
+ * @see androidx.core.util.Preconditions
  */
-@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
 public final class Preconditions {
 
     public static void checkArgument(boolean expression) {
@@ -58,8 +55,8 @@ public final class Preconditions {
      * @return the non-null reference that was validated
      * @throws NullPointerException if {@code reference} is null
      */
-    public static @NonNull
-    <T> T checkNotNull(@Nullable T reference) {
+    @NonNull
+    public static <T> T checkNotNull(@Nullable T reference) {
         if (reference == null) {
             throw new NullPointerException();
         }
@@ -76,8 +73,8 @@ public final class Preconditions {
      * @return the non-null reference that was validated
      * @throws NullPointerException if {@code reference} is null
      */
-    public static @NonNull
-    <T> T checkNotNull(@Nullable T reference, @NonNull Object errorMessage) {
+    @NonNull
+    public static <T> T checkNotNull(@Nullable T reference, @NonNull Object errorMessage) {
         if (reference == null) {
             throw new NullPointerException(String.valueOf(errorMessage));
         }
@@ -117,9 +114,9 @@ public final class Preconditions {
      * @return the validated numeric value
      * @throws IllegalArgumentException if {@code value} was negative
      */
-    public static @IntRange(from = 0)
-    int checkArgumentNonnegative(final int value,
-                                 @Nullable String errorMessage) {
+    @IntRange(from = 0)
+    public static int checkArgumentNonnegative(final int value,
+                                               @Nullable String errorMessage) {
         if (value < 0) {
             throw new IllegalArgumentException(errorMessage);
         }
@@ -134,8 +131,8 @@ public final class Preconditions {
      * @return the validated numeric value
      * @throws IllegalArgumentException if {@code value} was negative
      */
-    public static @IntRange(from = 0)
-    int checkArgumentNonnegative(final int value) {
+    @IntRange(from = 0)
+    public static int checkArgumentNonnegative(final int value) {
         if (value < 0) {
             throw new IllegalArgumentException();
         }
