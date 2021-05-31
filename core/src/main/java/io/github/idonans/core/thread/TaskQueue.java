@@ -65,6 +65,10 @@ public class TaskQueue {
     }
 
     public void enqueue(Runnable runnable) {
+        enqueue(runnable, false);
+    }
+
+    public void enqueue(Runnable runnable, boolean first) {
         Task task =
                 new Task(runnable) {
                     @Override
@@ -76,18 +80,22 @@ public class TaskQueue {
                         recheckQueue();
                     }
                 };
-        boolean offeredToQueue;
+        boolean addToQueue;
         synchronized (this.mLock) {
             if (this.mCurrentCount < this.mMaxCount) {
                 this.mCurrentCount++;
-                offeredToQueue = false;
+                addToQueue = false;
             } else {
                 this.mWaitCount++;
-                this.mQueue.offerLast(task);
-                offeredToQueue = true;
+                if (first) {
+                    this.mQueue.addFirst(task);
+                } else {
+                    this.mQueue.addLast(task);
+                }
+                addToQueue = true;
             }
         }
-        if (!offeredToQueue) {
+        if (!addToQueue) {
             ThreadPool.getInstance().post(task);
         }
     }
