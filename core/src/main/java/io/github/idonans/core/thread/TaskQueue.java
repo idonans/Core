@@ -102,13 +102,9 @@ public class TaskQueue {
 
     private void recheckQueue() {
         ThreadPool.getInstance()
-                .post(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                for (; recheckQueueInternal(); ) ;
-                            }
-                        });
+                .post(() -> {
+                    for (; recheckQueueInternal(); ) ;
+                });
     }
 
     private boolean recheckQueueInternal() {
@@ -132,11 +128,11 @@ public class TaskQueue {
 
     public void printDetail(StringBuilder builder) {
         String tag = "TaskQueue";
-        builder.append("--" + (tag) + "--\n");
-        builder.append("--max count:" + getMaxCount() + "--\n");
-        builder.append("--current count:" + getCurrentCount() + "--\n");
-        builder.append("--wait count:" + getWaitCount() + "--\n");
-        builder.append("--" + (tag) + "--end\n");
+        builder.append("--").append(tag).append("--\n");
+        builder.append("--max count:").append(getMaxCount()).append("--\n");
+        builder.append("--current count:").append(getCurrentCount()).append("--\n");
+        builder.append("--wait count:").append(getWaitCount()).append("--\n");
+        builder.append("--").append(tag).append("--end\n");
     }
 
     private static class Task implements Runnable {
