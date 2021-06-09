@@ -24,6 +24,8 @@ public class TaskQueue {
 
     private final Deque<Task> mQueue = new LinkedList<>();
 
+    private Object mRecheckQueueTag;
+
     public TaskQueue(int maxCount) {
         if (maxCount <= 0) {
             throw new IllegalArgumentException("max count must > 0, max count:" + maxCount);
@@ -97,14 +99,17 @@ public class TaskQueue {
         }
         if (!addToQueue) {
             ThreadPool.getInstance().post(task);
+        } else {
+            recheckQueue();
         }
     }
 
     private void recheckQueue() {
-        ThreadPool.getInstance()
-                .post(() -> {
-                    for (; recheckQueueInternal(); ) ;
-                });
+        final Object recheckQueueTag = new Object();
+        mRecheckQueueTag = recheckQueueTag;
+        ThreadPool.getInstance().post(() -> {
+            for (; mRecheckQueueTag == recheckQueueTag && recheckQueueInternal(); ) ;
+        });
     }
 
     private boolean recheckQueueInternal() {
