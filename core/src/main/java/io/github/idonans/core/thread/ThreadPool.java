@@ -1,8 +1,7 @@
 package io.github.idonans.core.thread;
 
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -22,31 +21,23 @@ public class ThreadPool {
     private static final String THREAD_NAME = "thread_pool";
 
     private final AtomicInteger mCount = new AtomicInteger();
-    private final ThreadPoolExecutor mExecutor =
-            new ThreadPoolExecutor(
-                    0, Integer.MAX_VALUE,
-                    60L, TimeUnit.SECONDS,
-                    new SynchronousQueue<Runnable>());
+    private final Executor mExecutor = Executors.newCachedThreadPool();
 
     private ThreadPool() {
     }
 
     public void post(final Runnable runnable) {
-        mExecutor.execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        mCount.incrementAndGet();
-                        try {
-                            Thread.currentThread().setName(THREAD_NAME);
-                            android.os.Process.setThreadPriority(
-                                    android.os.Process.THREAD_PRIORITY_BACKGROUND);
-                            runnable.run();
-                        } finally {
-                            mCount.decrementAndGet();
-                        }
-                    }
-                });
+        mExecutor.execute(() -> {
+            mCount.incrementAndGet();
+            try {
+                Thread.currentThread().setName(THREAD_NAME);
+                android.os.Process.setThreadPriority(
+                        android.os.Process.THREAD_PRIORITY_BACKGROUND);
+                runnable.run();
+            } finally {
+                mCount.decrementAndGet();
+            }
+        });
     }
 
     /**

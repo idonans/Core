@@ -1,7 +1,9 @@
 package io.github.idonans.core.thread;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 任务队列，所有任务都在共享的线程池中执行
@@ -23,6 +25,7 @@ public class TaskQueue {
     private int mWaitCount;
 
     private final Deque<Task> mQueue = new LinkedList<>();
+    private final List<Task> mRunningTask = new ArrayList<>();
 
     private Object mRecheckQueueTag;
 
@@ -58,10 +61,14 @@ public class TaskQueue {
         return this.mCurrentCount;
     }
 
+    public int getRunningTaskSize() {
+        return this.mRunningTask.size();
+    }
+
     public void skipQueue() {
         synchronized (mLock) {
             for (Task item : mQueue) {
-                item.setSkip(true);
+                item.setSkip();
             }
         }
     }
@@ -71,21 +78,24 @@ public class TaskQueue {
     }
 
     public void enqueue(Runnable runnable, boolean first) {
-        Task task =
-                new Task(runnable) {
-                    @Override
-                    protected void onTargetFinished() {
-                        super.onTargetFinished();
-                        synchronized (mLock) {
-                            mCurrentCount--;
-                        }
-                        recheckQueue();
+        final Task task = new Task(runnable) {
+            @Override
+            public void run() {
+                super.run();
+                synchronized (mLock) {
+                    mCurrentCount--;
+                    if (!mRunningTask.remove(this)) {
+                        throw new IllegalStateException("fail to remove task " + this);
                     }
-                };
-        boolean addToQueue;
+                }
+                recheckQueue();
+            }
+        };
+        final boolean addToQueue;
         synchronized (this.mLock) {
             if (this.mCurrentCount < this.mMaxCount) {
                 this.mCurrentCount++;
+                mRunningTask.add(task);
                 addToQueue = false;
             } else {
                 this.mWaitCount++;
@@ -99,8 +109,6 @@ public class TaskQueue {
         }
         if (!addToQueue) {
             ThreadPool.getInstance().post(task);
-        } else {
-            recheckQueue();
         }
     }
 
@@ -120,6 +128,7 @@ public class TaskQueue {
                 if (postToRun != null) {
                     this.mWaitCount--;
                     this.mCurrentCount++;
+                    mRunningTask.add(postToRun);
                 }
             } else {
                 postToRun = null;
@@ -136,6 +145,7 @@ public class TaskQueue {
         builder.append("--").append(tag).append("--\n");
         builder.append("--max count:").append(getMaxCount()).append("--\n");
         builder.append("--current count:").append(getCurrentCount()).append("--\n");
+        builder.append("--running task size:").append(getRunningTaskSize()).append("--\n");
         builder.append("--wait count:").append(getWaitCount()).append("--\n");
         builder.append("--").append(tag).append("--end\n");
     }
@@ -149,23 +159,16 @@ public class TaskQueue {
             this.mTarget = target;
         }
 
-        private void setSkip(boolean skip) {
-            this.mSkip = skip;
+        private void setSkip() {
+            this.mSkip = true;
         }
 
         @Override
         public void run() {
-            try {
-                if (!mSkip) {
-                    this.mTarget.run();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!mSkip) {
+                this.mTarget.run();
             }
-            onTargetFinished();
-        }
-
-        protected void onTargetFinished() {
         }
     }
+
 }
