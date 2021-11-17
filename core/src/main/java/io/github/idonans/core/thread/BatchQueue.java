@@ -63,6 +63,10 @@ public class BatchQueue<T> {
     }
 
     private void dispatch() {
+        if (mDispatchQueue.getCurrentCount() > 3) {
+            return;
+        }
+
         mDispatchQueue.skipQueue();
         mDispatchQueue.enqueue(() -> {
             if (mPostToUiThread) {
@@ -89,6 +93,12 @@ public class BatchQueue<T> {
             CoreLog.v("consumer is null");
             return;
         }
+
+        if (isPaused()) {
+            CoreLog.v("consumer is paused");
+            return;
+        }
+
         final List<T> payloadList;
         mLock.lock();
         try {
@@ -102,6 +112,25 @@ public class BatchQueue<T> {
         }
         consumer.accept(payloadList);
         dispatch();
+    }
+
+    /**
+     * batch 队列是否已经暂停. 处于暂停状态时，消费端将被挂起.
+     *
+     * @return 如果队列需要被暂时挂起返回 true, 否则返回 false.
+     * @see #resume()
+     */
+    protected boolean isPaused() {
+        return false;
+    }
+
+    /**
+     * 恢复队列的消费端
+     *
+     * @see #isPaused()
+     */
+    public void resume() {
+        Threads.postUi(this::dispatch);
     }
 
 }
