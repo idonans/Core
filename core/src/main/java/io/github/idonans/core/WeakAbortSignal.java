@@ -1,13 +1,9 @@
 package io.github.idonans.core;
 
-import java.lang.ref.WeakReference;
-
 import androidx.annotation.Nullable;
 
-/**
- * @return true, if the reference object is null.
- * or check the object#isAbort if it's instance of AbortSignal
- */
+import java.lang.ref.WeakReference;
+
 public class WeakAbortSignal extends SimpleAbortSignal {
 
     private final WeakReference<Object> mWeakReference;
