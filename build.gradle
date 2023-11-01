@@ -4,7 +4,7 @@ buildscript {
     rootProject.ext.bcfg.addRepos(repositories)
     dependencies {
         classpath rootProject.ext.bcfg.deps.android_gradle_plugin
-        classpath rootProject.ext.bcfg.deps.kotlin_gradle_plugin
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20'
         classpath rootProject.ext.bcfg.deps.proto_gradle_plugin
     }
     repositories {

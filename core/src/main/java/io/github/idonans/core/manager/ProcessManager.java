@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import io.github.idonans.core.CoreLog;
 import io.github.idonans.core.Singleton;
 import io.github.idonans.core.util.ContextUtil;
+import io.github.idonans.core.util.ProcessUtil;
 
 import java.util.List;
 
@@ -63,26 +64,17 @@ public class ProcessManager {
     }
 
     private String fetchProcessName() {
-        final int pid = android.os.Process.myPid();
-
-        ActivityManager activityManager =
-                (ActivityManager)
-                        ContextUtil.getContext().getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> processInfos =
-                activityManager.getRunningAppProcesses();
-        for (ActivityManager.RunningAppProcessInfo processInfo : processInfos) {
-            if (processInfo.pid == pid) {
-                return processInfo.processName;
-            }
+        String processName = ProcessUtil.getCurrentProcessName(ContextUtil.getContext());
+        if (processName != null) {
+            return processName;
         }
-
         String fallback = String.format("%s:invalid_p%s_u%s_cp%s_cu%s_%s",
                 ContextUtil.getContext().getPackageName(),
                 android.os.Process.myPid(),
                 android.os.Process.myUid(),
                 Binder.getCallingPid(),
                 Binder.getCallingUid(),
-                processInfos.size());
+                0);
         CoreLog.e("fallback process name %s", fallback);
         return fallback;
     }

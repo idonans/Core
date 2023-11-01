@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -33,4 +34,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':core')
     implementation rootProject.ext.bcfg.deps.androidx_constraintlayout
+    implementation 'androidx.core:core-ktx:1.9.0'
 }
